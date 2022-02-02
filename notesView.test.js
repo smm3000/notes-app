@@ -37,3 +37,18 @@ describe('Add Notes', () => {
 
     })
 })
+
+describe('Display Notes', () => {
+    it('displays the correct number of notes', () => {
+        document.body.innerHTML = fs.readFileSync('./index.html');
+        const model = new notesModel();
+        const view = new NotesView(model);
+        model.addNote('Note one');
+        model.addNote('Note two');
+        model.addNote('Note three');
+        view.displayNotes();
+        view.displayNotes();
+        expect(document.querySelectorAll('div.note').length).toEqual(3);
+
+    })
+})
