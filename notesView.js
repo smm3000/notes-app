@@ -10,11 +10,11 @@ class NotesView {
     }
 
     displayNotes() {
+        let existingNotes = document.querySelectorAll('div.note');
+        
+        existingNotes.forEach(element => element.remove())
+        
         const notes = this.model.getNotes()
-
-       // const existingNotes = document.getElementsByClassName('note');
-        // existingNotes[0].parentNode.removeChild(existingNotes[0]);
-
         notes.forEach(note => {
             const noteEl = document.createElement('div');
             noteEl.innerText = note;
