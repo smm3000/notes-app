@@ -35,6 +35,7 @@
           document.querySelector("#add-note-btn").addEventListener("click", () => {
             const newNote = document.querySelector("#add-note-input").value;
             this.addNewNote(newNote);
+            document.querySelector("#add-note-input").value = "";
           });
         }
         displayNotes() {
