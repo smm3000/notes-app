@@ -7,7 +7,7 @@ class NotesApi {
       })
   }
 
-  createNote(callback, notescontent) {
+  createNote(notescontent, callback) {
     fetch('http://localhost:3000/notes', {
       method: 'POST',
       headers: {
@@ -19,9 +19,5 @@ class NotesApi {
       .then(data => callback(data))
   }
 };
-
-
-
-
 
 module.exports = NotesApi;

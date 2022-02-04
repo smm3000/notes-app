@@ -4,16 +4,16 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
-  // notesapi.js
-  var require_notesapi = __commonJS({
-    "notesapi.js"(exports, module) {
+  // NotesApi.js
+  var require_NotesApi = __commonJS({
+    "NotesApi.js"(exports, module) {
       var NotesApi2 = class {
         loadNotes(callback) {
           fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => {
             callback(data);
           });
         }
-        createNote(callback, notescontent) {
+        createNote(notescontent, callback) {
           fetch("http://localhost:3000/notes", {
             method: "POST",
             headers: {
@@ -31,11 +31,12 @@
   var require_notesModel = __commonJS({
     "notesModel.js"(exports, module) {
       var notesModel2 = class {
-        constructor() {
+        constructor(api2) {
           this.notes = [];
+          this.api = api2;
         }
-        addNote(note) {
-          this.notes.push(note);
+        addNote(note, callback) {
+          this.api.createNote(note, callback);
         }
         getNotes() {
           return this.notes;
@@ -75,8 +76,8 @@
             this.mainContainerEl.append(noteEl);
           });
         }
-        addNewNote(newNote) {
-          this.model.addNote(newNote);
+        addNewNote(newNote, callback) {
+          this.model.addNote(newNote, callback);
           this.displayNotes();
         }
       };
@@ -85,15 +86,12 @@
   });
 
   // index.js
-  var NotesApi = require_notesapi();
+  var NotesApi = require_NotesApi();
   var notesModel = require_notesModel();
   var notesView = require_notesView();
-  var model = new notesModel();
-  var view = new notesView(model);
   var api = new NotesApi();
-  view.displayNotes();
-  console.log("The notes app is running");
-  console.log(model.getNotes());
+  var model = new notesModel(api);
+  var view = new notesView(model);
   api.loadNotes((notes) => {
     model.setNotes(notes);
     view.displayNotes();

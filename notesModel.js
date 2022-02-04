@@ -1,10 +1,11 @@
 class notesModel {
-    constructor () {
+    constructor (api) {
         this.notes = []
+        this.api = api
     }
 
-    addNote(note) {
-        this.notes.push(note);
+    addNote(note, callback) {
+        this.api.createNote(note, callback)
     }
 
     getNotes() {

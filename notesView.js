@@ -25,8 +25,8 @@ class NotesView {
         })
     }
 
-    addNewNote(newNote) {
-        this.model.addNote(newNote);
+    addNewNote(newNote, callback) {
+        this.model.addNote(newNote, callback);
         this.displayNotes();
     }
 }

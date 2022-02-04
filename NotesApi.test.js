@@ -14,15 +14,17 @@ describe('NotesApi class', () => {
    })
 
    it('posts a note to the backend when a post is created', async () => {
+        fetch.resetMocks()
         const api = new NotesApi();
-        fetch.mockResponseOnce(JSON.stringify(
-            ['created test note']))
+        fetch.mockResponseOnce(JSON.stringify(['new note']))
 
-        api.createNote((notes) => {
-            expect(notes[0]).toBe('created test note')
+        api.createNote('new note', (notes) => {
+            expect(notes.at(-1)).toBe('new note')
         })
-   })
 
+        expect(fetch.mock.calls.length).toBe(1)
+        expect(fetch.mock.calls[0][0]).toBe('http://localhost:3000/notes')
+   })
 })
 
 
